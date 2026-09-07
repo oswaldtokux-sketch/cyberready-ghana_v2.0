@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cybersecurity Assessment - CyberReady Ghana</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f7f9;
+        margin: 0;
+        padding: 30px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      .intro {
+        color: #555;
+        margin-bottom: 30px;
+      }
+
+      .question {
+        margin-bottom: 25px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      .category {
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      .question-text {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+
+      .option {
+        display: block;
+        margin: 10px 0;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        background: #1f6feb;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #1558b0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Cybersecurity Assessment</h1>
+
+      <p class="intro">
+        Answer the questions below based on your organization's current
+        cybersecurity practices.
+      </p>
+
+      <form method="POST">
+        {% for question in questions %}
+
+        <div class="question">
+          <div class="category">{{ question.category }}</div>
+
+          <div class="question-text">
+            {{ question.id }}. {{ question.question }}
+          </div>
+
+          <label class="option">
+            <input type="radio" name="{{ question.id }}" value="yes" required />
+            Yes
+          </label>
+
+          <label class="option">
+            <input type="radio" name="{{ question.id }}" value="partially" />
+            Partially
+          </label>
+
+          <label class="option">
+            <input type="radio" name="{{ question.id }}" value="no" />
+            No
+          </label>
+        </div>
+
+        {% endfor %}
+
+        <button type="submit">Submit Assessment</button>
+      </form>
+    </div>
+  </body>
+</html>

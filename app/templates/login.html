@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - CyberReady Ghana</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <nav>
+      <div class="logo">CyberReady <span>Ghana</span></div>
+
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </nav>
+
+    <section>
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+
+      <div class="flash-message">{{ message }}</div>
+
+      {% endfor %} {% endif %} {% endwith %}
+
+      <div class="section-title">
+        <h2>Welcome Back</h2>
+
+        <p>Log in to continue your cybersecurity assessment.</p>
+      </div>
+
+      <div class="form-container">
+        <form method="POST">
+          <div class="form-group">
+            <label for="email"> Email Address </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password"> Password </label>
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p style="margin-top: 20px; text-align: center">
+          Don't have an account?
+
+          <a href="/register"> Register here </a>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
+    </footer>
+  </body>
+</html>

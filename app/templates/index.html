@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CyberReady Ghana</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">CyberReady <span>Ghana</span></div>
+
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>
+          Know Your
+          <span>Cybersecurity Risk</span>
+        </h1>
+
+        <p>
+          CyberReady Ghana helps small travel agencies understand their
+          cybersecurity weaknesses, identify important risks, and know what to
+          fix first.
+        </p>
+
+        <a href="{{ url_for('main.register') }}" class="btn">
+          Start Assessment
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="section-title">
+        <h2>What is CyberReady Ghana?</h2>
+
+        <p>
+          A simple cybersecurity self-assessment platform designed for small
+          travel agencies.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+      <div class="section-title">
+        <h2>What You Can Do</h2>
+
+        <p>Build a stronger cybersecurity foundation for your organization.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <h3>🔍 Self-Assessment</h3>
+
+          <p>
+            Answer simple cybersecurity questions to understand the current
+            security posture of your organization.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>📊 Risk Analysis</h3>
+
+          <p>
+            Identify weaknesses and understand which cybersecurity areas require
+            the most attention.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🎯 Prioritized Actions</h3>
+
+          <p>
+            Receive practical recommendations showing what your organization
+            should fix first.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="cta">
+      <h2>Ready to Check Your Cybersecurity?</h2>
+
+      <p>
+        Start your assessment and discover where your organization can improve.
+      </p>
+
+      <a href="{{ url_for('main.register') }}" class="btn">
+        Start Assessment
+      </a>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
+    </footer>
+  </body>
+</html>

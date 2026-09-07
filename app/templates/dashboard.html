@@ -1,0 +1,187 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    ```
+    <title>Dashboard - CyberReady Ghana</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    ```
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">CyberReady <span>Ghana</span></div>
+
+      ```
+      <ul class="nav-links">
+        <li>
+          <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+        </li>
+
+        <li>
+          <a href="{{ url_for('main.logout') }}">Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <section>
+      <!-- Welcome Section -->
+      <div class="section-title">
+        <h2>Welcome, {{ organization.contact_person }}</h2>
+
+        <p>{{ organization.organization_name }}</p>
+      </div>
+
+      <!-- Dashboard Cards -->
+      <div class="features">
+        <!-- Assessment Card -->
+        <div class="feature-card">
+          <h3>🔐 Cybersecurity Assessment</h3>
+
+          <p>
+            Evaluate your organization's current cybersecurity practices using
+            our 20-question assessment.
+          </p>
+
+          <br />
+
+          <a href="{{ url_for('main.assessment') }}" class="btn">
+            Start Assessment
+          </a>
+        </div>
+
+        <!-- Security Score Card -->
+        <div class="feature-card">
+          <h3>📊 Security Score</h3>
+
+          {% if latest_assessment %}
+
+          <div class="dashboard-score">
+            {{ latest_assessment.score|int }} / 40
+          </div>
+
+          <p>
+            Risk Level:
+            <strong> {{ latest_assessment.risk_level }} </strong>
+          </p>
+
+          <p>
+            Completed: {{ latest_assessment.completed_at.strftime('%B %d, %Y')
+            }}
+          </p>
+
+          {% else %}
+
+          <p>You have not completed a cybersecurity assessment yet.</p>
+
+          <br />
+
+          <a href="{{ url_for('main.assessment') }}" class="btn">
+            Start Assessment
+          </a>
+
+          {% endif %}
+        </div>
+
+        <!-- Recommended Actions Card -->
+        <div class="feature-card">
+          <h3>🎯 Recommended Actions</h3>
+
+          {% if recommendations %} {% for item in recommendations %}
+
+          <div class="recommendation-item">
+            <h4>{{ item.title }}</h4>
+
+            <p>{{ item.recommendation }}</p>
+
+            <div class="recommendation-meta">
+              <span class="severity"> {{ item.severity }} </span>
+
+              <span class="priority"> {{ item.priority }} Priority </span>
+            </div>
+          </div>
+
+          {% endfor %} {% else %}
+
+          <p>
+            Great job! No immediate cybersecurity weaknesses were identified in
+            your latest assessment.
+          </p>
+
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Category Risk Analysis -->
+      <div class="category-analysis">
+        <div class="section-title">
+          <h2>📋 Cybersecurity Category Analysis</h2>
+
+          <p>
+            See how your organization is performing across each cybersecurity
+            area.
+          </p>
+        </div>
+
+        {% if category_results %}
+
+        <div class="category-grid">
+          {% for category in category_results %}
+
+          <div class="category-card">
+            <h3>{{ category.category }}</h3>
+
+            <!-- Category Score -->
+            <div class="category-score">
+              {{ category.score }} / {{ category.maximum_score }}
+            </div>
+
+            <!-- Percentage -->
+            <div class="category-percentage">{{ category.percentage }}%</div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+              <div
+                class="progress-fill {{ category.risk_level|lower|replace(' ', '-') }}"
+                style="width: {{ category.percentage }}%;"
+              ></div>
+            </div>
+
+            <!-- Risk Badge -->
+            <div
+              class="risk-badge {{ category.risk_level|lower|replace(' ', '-') }}"
+            >
+              {{ category.risk_level }}
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+
+        {% else %}
+
+        <p class="no-category-data">
+          Complete an assessment to see your category-level cybersecurity
+          analysis.
+        </p>
+
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
+    </footer>
+    ```
+  </body>
+</html>
