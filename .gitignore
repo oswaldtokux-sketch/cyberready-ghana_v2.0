@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
+# Virtual environments
 venv/
 .venv/
 env/
@@ -13,10 +13,10 @@ ENV/
 .env
 .env.*
 
-# Flask instance files
+# Flask
 instance/
 
-# Database files
+# Databases
 *.db
 *.sqlite
 *.sqlite3
@@ -25,7 +25,7 @@ instance/
 .vscode/
 .idea/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
