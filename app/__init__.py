@@ -10,7 +10,10 @@ def create_app():
 
     app = Flask(__name__)
 
-    app.config["SECRET_KEY"] = "cyberready-development-key"
+    app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "cyberready-development-key"
+    )
 
     # Database configuration
     basedir = os.path.abspath(os.path.dirname(__file__))
