@@ -15,15 +15,24 @@ def create_app():
     # Database configuration
     basedir = os.path.abspath(os.path.dirname(__file__))
 
+    database_dir = os.path.abspath(
+        os.path.join(
+            basedir,
+            "..",
+            "database"
+        )
+    )
+
+    # Create database directory if it does not exist
+    os.makedirs(database_dir, exist_ok=True)
+
     database_path = os.path.join(
-        basedir,
-        "..",
-        "database",
+        database_dir,
         "cyberready.db"
     )
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        "sqlite:///" + os.path.abspath(database_path)
+        "sqlite:///" + database_path
     )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
