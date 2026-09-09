@@ -11,7 +11,7 @@ from flask import (
 
 from app import db
 from app.models import Organization, Assessment, Question, Response
-from questions import QUESTIONS
+from questions import QUESTIONS, get_assessment_questions
 from recommendations import RECOMMENDATIONS
 from category_analysis import calculate_category_analysis
 
@@ -21,7 +21,11 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    return render_template("index.html")
+    organization_id = session.get("organization_id")
+    organization = None
+    if organization_id:
+        organization = db.session.get(Organization, organization_id)
+    return render_template("index.html", organization=organization)
 
 
 @main.route("/register", methods=["GET", "POST"])
@@ -214,7 +218,7 @@ def logout():
 
     flash("You have been logged out.")
 
-    return redirect(url_for("main.login"))
+    return redirect(url_for("main.home"))
 
 @main.route("/assessment", methods=["GET", "POST"])
 def assessment():
@@ -226,12 +230,15 @@ def assessment():
         return redirect(url_for("main.login"))
 
     if request.method == "POST":
-
+        # Get the questions that were presented to the user
+        assessment_questions = get_assessment_questions()
+        
+        # Also need to maintain a list for this assessment
         answers = {}
         score = 0
 
-        # Calculate the assessment score
-        for question in QUESTIONS:
+        # Calculate the assessment score based on selected questions
+        for question in assessment_questions:
 
             question_id = str(question["id"])
             answer = request.form.get(question_id)
@@ -274,7 +281,7 @@ def assessment():
         db.session.flush()
 
         # Save individual responses
-        for question in QUESTIONS:
+        for question in assessment_questions:
 
             question_id = question["id"]
             answer = answers[str(question_id)]
@@ -301,13 +308,16 @@ def assessment():
 
         return render_template(
             "assessment_result.html",
-            questions=QUESTIONS,
+            questions=assessment_questions,
             answers=answers,
             score=score,
             risk_level=risk_level
         )
 
+    # GET request - generate new random questions for this assessment
+    assessment_questions = get_assessment_questions()
+    
     return render_template(
         "assessment.html",
-        questions=QUESTIONS
+        questions=assessment_questions
     )

@@ -7,110 +7,473 @@
     <title>Cybersecurity Assessment - CyberReady Ghana</title>
 
     <style>
+      :root {
+        --ink: #102a43;
+        --muted: #627d98;
+        --line: #d9e2ec;
+        --surface: #ffffff;
+        --wash: #f4f8f7;
+        --green: #16805b;
+        --green-soft: #e3f5ed;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background: #f4f7f9;
+        background: var(--wash);
+        color: var(--ink);
         margin: 0;
-        padding: 30px;
+        padding: 42px 24px;
+      }
+
+      .assessment-shell {
+        max-width: 1180px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .container,
+      .assessment-panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 14px;
       }
 
       .container {
-        max-width: 900px;
-        margin: auto;
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
+        padding: 34px;
       }
 
       h1 {
-        margin-bottom: 10px;
+        margin: 0 0 10px;
+        font-size: 34px;
+        letter-spacing: -0.5px;
       }
 
       .intro {
-        color: #555;
-        margin-bottom: 30px;
+        color: var(--muted);
+        margin: 0 0 30px;
+        max-width: 650px;
       }
 
       .question {
         margin-bottom: 25px;
         padding: 20px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--line);
         border-radius: 8px;
+        scroll-margin-top: 24px;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+
+      .question.is-active {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(22, 128, 91, 0.1);
       }
 
       .category {
         font-size: 14px;
         font-weight: bold;
-        color: #555;
+        color: var(--green);
         margin-bottom: 10px;
       }
 
       .question-text {
         font-size: 18px;
         margin-bottom: 15px;
+        overflow-wrap: anywhere;
       }
 
       .option {
         display: block;
-        margin: 10px 0;
+        margin: 6px 0;
+        padding: 8px 4px;
+        color: #334e68;
+        cursor: pointer;
+      }
+
+      .option input {
+        accent-color: var(--green);
+        margin-right: 8px;
       }
 
       button {
-        width: 100%;
         padding: 14px;
         border: none;
         border-radius: 6px;
-        background: #1f6feb;
+        background: var(--green);
         color: white;
         font-size: 16px;
         cursor: pointer;
       }
 
       button:hover {
-        background: #1558b0;
+        background: #0f6849;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .button-group button {
+        flex: 1;
+      }
+
+      .quit-button {
+        background: #627d98;
+      }
+
+      .quit-button:hover {
+        background: #4a5f7f;
+      }
+
+      .assessment-panel {
+        position: sticky;
+        top: 24px;
+        padding: 22px;
+      }
+
+      .panel-kicker {
+        color: var(--green);
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .panel-title {
+        margin: 7px 0 20px;
+        font-size: 21px;
+      }
+
+      .progress-track {
+        height: 8px;
+        background: #e6edf0;
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        width: 0;
+        height: 100%;
+        background: var(--green);
+        border-radius: inherit;
+        transition: width 180ms ease;
+      }
+
+      .progress-copy {
+        display: flex;
+        justify-content: space-between;
+        margin: 9px 0 24px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .question-nav {
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        display: flex;
+        gap: 8px;
+        margin: 0 0 28px;
+        padding: 10px 2px 14px;
+        background: var(--wash);
+        border-bottom: 1px solid var(--line);
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+
+      .category-nav {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 22px;
+      }
+
+      .category-item {
+        padding: 9px 11px;
+        background: #f0f4f5;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 1.3;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        border-radius: 4px;
+      }
+
+      .category-name {
+        flex: 1;
+        text-align: left;
+      }
+
+      .category-progress {
+        background: rgba(102, 125, 152, 0.2);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: normal;
+        white-space: nowrap;
+        color: var(--muted);
+      }
+
+      .question-nav button {
+        flex: 0 0 40px;
+        min-height: 40px;
+        padding: 6px;
+        background: #f0f4f5;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .question-nav button:hover,
+      .question-nav button.is-current,
+      .category-nav button:hover,
+      .category-nav button.is-current {
+        background: var(--green);
+        color: white;
+      }
+
+      .question-nav button.is-answered {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .panel-note {
+        padding: 14px;
+        background: #fff8e7;
+        border-left: 3px solid #e7b84b;
+        color: #735b20;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 840px) {
+        body {
+          padding: 24px 16px;
+        }
+
+        .assessment-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .assessment-panel {
+          position: static;
+          grid-row: 1;
+        }
+
+        .container {
+          grid-row: 2;
+          padding: 24px;
+        }
+
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 12px 10px 24px;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+
+        .assessment-panel {
+          padding: 18px;
+        }
+
+        .container {
+          padding: 20px 16px;
+        }
+
+        .question {
+          padding: 16px;
+        }
+
+        .question-text {
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        .progress-copy {
+          margin-bottom: 18px;
+        }
+
+        .category-nav {
+          margin-bottom: 18px;
+        }
+
+        .question-nav {
+          margin-bottom: 22px;
+          gap: 7px;
+        }
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
-      <h1>Cybersecurity Assessment</h1>
+    <div class="assessment-shell">
+      <main class="container">
+        <h1>Cybersecurity Assessment</h1>
 
-      <p class="intro">
-        Answer the questions below based on your organization's current
-        cybersecurity practices.
-      </p>
+        <p class="intro">
+          Answer the questions below based on your organization's current
+          cybersecurity practices.
+        </p>
 
-      <form method="POST">
-        {% for question in questions %}
-
-        <div class="question">
-          <div class="category">{{ question.category }}</div>
-
-          <div class="question-text">
-            {{ question.id }}. {{ question.question }}
-          </div>
-
-          <label class="option">
-            <input type="radio" name="{{ question.id }}" value="yes" required />
-            Yes
-          </label>
-
-          <label class="option">
-            <input type="radio" name="{{ question.id }}" value="partially" />
-            Partially
-          </label>
-
-          <label class="option">
-            <input type="radio" name="{{ question.id }}" value="no" />
-            No
-          </label>
+        <div class="question-nav" aria-label="Question navigator">
+          {% for question in questions %}
+          <button type="button" data-question="{{ question.id }}" aria-label="Go to question {{ loop.index }}">
+            {{ loop.index }}
+          </button>
+          {% endfor %}
         </div>
 
-        {% endfor %}
+        <form method="POST">
+          {% for question in questions %}
 
-        <button type="submit">Submit Assessment</button>
-      </form>
+          <div class="question" id="question-{{ question.id }}">
+            <div class="category">{{ question.category }}</div>
+
+            <div class="question-text">
+              {{ loop.index }}. {{ question.question }}
+            </div>
+
+            <label class="option">
+              <input type="radio" name="{{ question.id }}" value="yes" required />
+              Yes
+            </label>
+
+            <label class="option">
+              <input type="radio" name="{{ question.id }}" value="partially" />
+              Partially
+            </label>
+
+            <label class="option">
+              <input type="radio" name="{{ question.id }}" value="no" />
+              No
+            </label>
+          </div>
+
+          {% endfor %}
+
+          <div class="button-group">
+            <button type="submit">Submit Assessment</button>
+            <button type="button" class="quit-button" onclick="window.location.href='{{ url_for('main.dashboard') }}'">Quit Assessment</button>
+          </div>
+        </form>
+      </main>
+
+      <aside class="assessment-panel" aria-label="Assessment progress">
+        <div class="panel-kicker">Your progress</div>
+        <h2 class="panel-title">Security check-in</h2>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-copy">
+          <span id="progress-count">0 of {{ questions|length }} answered</span>
+          <span id="progress-percent">0%</span>
+        </div>
+
+        {% set categories = [] %}
+        <div class="category-nav" aria-label="Assessment categories">
+          {% for question in questions %}
+          {% if question.category not in categories %}
+          <div class="category-item" data-category="{{ question.category }}">
+            <span class="category-name">{{ question.category }}</span>
+            <span class="category-progress" data-category="{{ question.category }}">0/4</span>
+          </div>
+          {% set _ = categories.append(question.category) %}
+          {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="panel-note">
+          Choose the answer that best reflects how your organization operates today. You can review any question before submitting.
+        </div>
+      </aside>
     </div>
+
+    <script>
+      const questionCards = [...document.querySelectorAll(".question")];
+      const navigatorButtons = [...document.querySelectorAll("[data-question]")];
+      const progressFill = document.querySelector("#progress-fill");
+      const progressCount = document.querySelector("#progress-count");
+      const progressPercent = document.querySelector("#progress-percent");
+      const totalQuestions = questionCards.length;
+
+      function getCategoryQuestionsMap() {
+        const categoryMap = {};
+        questionCards.forEach((card) => {
+          const category = card.querySelector(".category").textContent.trim();
+          if (!categoryMap[category]) {
+            categoryMap[category] = [];
+          }
+          categoryMap[category].push(card);
+        });
+        return categoryMap;
+      }
+
+      const categoryQuestionsMap = getCategoryQuestionsMap();
+
+      function updateProgress() {
+        const answered = questionCards.filter((card) =>
+          card.querySelector("input:checked")
+        ).length;
+        const percentage = Math.round((answered / totalQuestions) * 100);
+
+        progressFill.style.width = `${percentage}%`;
+        progressCount.textContent = `${answered} of ${totalQuestions} answered`;
+        progressPercent.textContent = `${percentage}%`;
+
+        navigatorButtons.forEach((button) => {
+          const card = document.querySelector(`#question-${button.dataset.question}`);
+          button.classList.toggle("is-answered", Boolean(card.querySelector("input:checked")));
+        });
+
+        // Update category progress
+        document.querySelectorAll(".category-item").forEach((item) => {
+          const category = item.dataset.category;
+          const categoryQuestions = categoryQuestionsMap[category] || [];
+          const answered = categoryQuestions.filter((card) =>
+            card.querySelector("input:checked")
+          ).length;
+          const total = categoryQuestions.length;
+          const progressSpan = item.querySelector(".category-progress");
+          if (progressSpan) {
+            progressSpan.textContent = `${answered}/${total}`;
+          }
+        });
+      }
+
+      navigatorButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          focusQuestion(button.dataset.question);
+        });
+      });
+
+      function focusQuestion(questionId) {
+        const card = document.querySelector(`#question-${questionId}`);
+
+        card.scrollIntoView({ behavior: "smooth", block: "start" });
+        questionCards.forEach((item) => item.classList.remove("is-active"));
+        card.classList.add("is-active");
+      }
+
+      document.querySelectorAll("input[type=radio]").forEach((input) => {
+        input.addEventListener("change", updateProgress);
+      });
+
+      updateProgress();
+    </script>
   </body>
 </html>

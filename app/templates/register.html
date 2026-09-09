@@ -10,12 +10,30 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+
+    <style>
+      .account-prompt {
+        margin-top: 18px;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .account-prompt a {
+        color: #16805b;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .account-prompt a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
 
   <body>
     <!-- Navigation -->
     <nav>
-      <div class="logo">CyberReady <span>Ghana</span></div>
+      <a href="{{ url_for('main.home') }}" class="logo">CyberReady <span>Ghana</span></a>
 
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
@@ -115,6 +133,11 @@
 
           <button type="submit" class="btn">Create Account</button>
         </form>
+
+        <p class="account-prompt">
+          Already have an account?
+          <a href="{{ url_for('main.login') }}">Log in</a>
+        </p>
       </div>
     </section>
     {% with messages = get_flashed_messages() %} {% if messages %} {% for

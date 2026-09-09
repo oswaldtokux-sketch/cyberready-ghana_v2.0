@@ -58,11 +58,58 @@
       .back-button {
         display: inline-block;
         padding: 12px 20px;
-        background: #1f6feb;
+        background: #16805b;
         color: white;
         text-decoration: none;
         border-radius: 6px;
         margin-bottom: 20px;
+      }
+
+      .back-button:hover {
+        background: #0f6849;
+      }
+
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .result-actions .back-button {
+        margin-bottom: 0;
+      }
+
+      .secondary-button {
+        display: inline-block;
+        padding: 12px 20px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        color: #334e68;
+        text-decoration: none;
+      }
+
+      .secondary-button:hover {
+        background: #f1f5f9;
+      }
+
+      @media (max-width: 520px) {
+        body {
+          padding: 20px 14px;
+        }
+
+        .summary {
+          padding: 24px 18px;
+        }
+
+        .score {
+          font-size: 40px;
+        }
+
+        .result-actions a {
+          width: 100%;
+          text-align: center;
+        }
       }
     </style>
   </head>
@@ -79,9 +126,15 @@
         <p>Your cybersecurity assessment has been completed.</p>
       </div>
 
-      <a href="{{ url_for('main.dashboard') }}" class="back-button">
-        Back to Dashboard
-      </a>
+      <div class="result-actions">
+        <a href="{{ url_for('main.dashboard') }}" class="back-button">
+          View Results &amp; Recommendations
+        </a>
+
+        <a href="{{ url_for('main.assessment') }}" class="secondary-button">
+          Retake Assessment
+        </a>
+      </div>
 
       <h2>Your Responses</h2>
 

@@ -15,13 +15,26 @@
   <body>
     <!-- Navigation -->
     <nav>
-      <div class="logo">CyberReady <span>Ghana</span></div>
+      <a href="{{ url_for('main.home') }}" class="logo">CyberReady <span>Ghana</span></a>
 
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#contact">Contact</a></li>
+        {% if organization %}
+        <li class="profile-dropdown">
+          <button class="profile-button">👤 {{ organization.organization_name }}</button>
+          <div class="dropdown-menu">
+            <a href="{{ url_for('main.dashboard') }}" class="dropdown-item">Dashboard</a>
+            <a href="{{ url_for('main.logout') }}" class="dropdown-item logout-item">Logout</a>
+          </div>
+        </li>
+        {% else %}
+        <li>
+          <a href="{{ url_for('main.login') }}" class="login-link">Log in</a>
+        </li>
+        {% endif %}
       </ul>
     </nav>
 
@@ -39,78 +52,109 @@
           fix first.
         </p>
 
+        {% if organization %}
+        <a href="{{ url_for('main.assessment') }}" class="btn">
+          Start Assessment
+        </a>
+        {% else %}
         <a href="{{ url_for('main.register') }}" class="btn">
           Start Assessment
         </a>
+        {% endif %}
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
-      <div class="section-title">
-        <h2>What is CyberReady Ghana?</h2>
+    <div class="content-backdrop">
+      <!-- About Section -->
+      <section id="about">
+        <div class="section-title">
+          <h2>What is CyberReady Ghana?</h2>
+
+          <p>
+            A simple cybersecurity self-assessment platform designed for small
+            travel agencies.
+          </p>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features">
+        <div class="section-title">
+          <h2>What You Can Do</h2>
+
+          <p>Build a stronger cybersecurity foundation for your organization.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature-card">
+            <h3>🔍 Self-Assessment</h3>
+
+            <p>
+              Answer simple cybersecurity questions to understand the current
+              security posture of your organization.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <h3>📊 Risk Analysis</h3>
+
+            <p>
+              Identify weaknesses and understand which cybersecurity areas require
+              the most attention.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <h3>🎯 Prioritized Actions</h3>
+
+            <p>
+              Receive practical recommendations showing what your organization
+              should fix first.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call To Action -->
+      <section class="cta">
+        <h2>Ready to Check Your Cybersecurity?</h2>
 
         <p>
-          A simple cybersecurity self-assessment platform designed for small
-          travel agencies.
+          Start your assessment and discover where your organization can improve.
         </p>
-      </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features">
-      <div class="section-title">
-        <h2>What You Can Do</h2>
-
-        <p>Build a stronger cybersecurity foundation for your organization.</p>
-      </div>
-
-      <div class="features">
-        <div class="feature-card">
-          <h3>🔍 Self-Assessment</h3>
-
-          <p>
-            Answer simple cybersecurity questions to understand the current
-            security posture of your organization.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h3>📊 Risk Analysis</h3>
-
-          <p>
-            Identify weaknesses and understand which cybersecurity areas require
-            the most attention.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h3>🎯 Prioritized Actions</h3>
-
-          <p>
-            Receive practical recommendations showing what your organization
-            should fix first.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Call To Action -->
-    <section class="cta">
-      <h2>Ready to Check Your Cybersecurity?</h2>
-
-      <p>
-        Start your assessment and discover where your organization can improve.
-      </p>
-
-      <a href="{{ url_for('main.register') }}" class="btn">
-        Start Assessment
-      </a>
-    </section>
+        {% if organization %}
+        <a href="{{ url_for('main.assessment') }}" class="btn">
+          Start Assessment
+        </a>
+        {% else %}
+        <a href="{{ url_for('main.register') }}" class="btn">
+          Start Assessment
+        </a>
+        {% endif %}
+      </section>
+    </div>
 
     <!-- Footer -->
     <footer id="contact">
       <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
     </footer>
+
+    <script>
+      const profileDropdown = document.querySelector('.profile-dropdown');
+      const profileButton = document.querySelector('.profile-button');
+
+      if (profileButton) {
+        profileButton.addEventListener('click', function() {
+          profileDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!profileDropdown.contains(e.target)) {
+            profileDropdown.classList.remove('active');
+          }
+        });
+      }
+    </script>
   </body>
 </html>
