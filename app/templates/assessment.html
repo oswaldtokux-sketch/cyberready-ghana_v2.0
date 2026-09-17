@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Cybersecurity Assessment - CyberReady Ghana</title>
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}" />
 
     <style>
       :root {
@@ -338,7 +339,10 @@
           {% endfor %}
         </div>
 
-        <form method="POST">
+        <form method="POST" id="assessment-form" data-draft-id="{{ draft_id }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <p id="offline-status" role="status" aria-live="polite"></p>
+          <button type="button" id="retry-saved-assessment" hidden>Submit saved assessment</button>
           {% for question in questions %}
 
           <div class="question" id="question-{{ question.id }}">
@@ -368,7 +372,7 @@
 
           <div class="button-group">
             <button type="submit">Submit Assessment</button>
-            <button type="button" class="quit-button" onclick="window.location.href='{{ url_for('main.dashboard') }}'">Quit Assessment</button>
+            <button type="button" class="quit-button" id="quit-assessment" data-dashboard-url="{{ url_for('main.dashboard') }}">Quit Assessment</button>
           </div>
         </form>
       </main>
@@ -403,6 +407,7 @@
       </aside>
     </div>
 
+    <script src="{{ url_for('static', filename='js/assessment-draft.js') }}"></script>
     <script>
       const questionCards = [...document.querySelectorAll(".question")];
       const navigatorButtons = [...document.querySelectorAll("[data-question]")];
@@ -410,6 +415,7 @@
       const progressCount = document.querySelector("#progress-count");
       const progressPercent = document.querySelector("#progress-percent");
       const totalQuestions = questionCards.length;
+      let activeQuestionIndex = 0;
 
       function getCategoryQuestionsMap() {
         const categoryMap = {};
@@ -467,6 +473,7 @@
         card.scrollIntoView({ behavior: "smooth", block: "start" });
         questionCards.forEach((item) => item.classList.remove("is-active"));
         card.classList.add("is-active");
+        activeQuestionIndex = questionCards.indexOf(card);
       }
 
       document.querySelectorAll("input[type=radio]").forEach((input) => {
@@ -474,6 +481,7 @@
       });
 
       updateProgress();
+      focusQuestion(questionCards[0].id.replace("question-", ""));
     </script>
   </body>
 </html>

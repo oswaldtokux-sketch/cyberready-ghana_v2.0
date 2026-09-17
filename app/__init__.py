@@ -1,19 +1,31 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 import os
+import secrets
 
 
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 
-def create_app():
+def create_app(test_config=None):
 
     app = Flask(__name__)
 
-    app.config["SECRET_KEY"] = os.environ.get(
-    "SECRET_KEY",
-    "cyberready-development-key"
+    environment = os.environ.get("CYBERREADY_ENV", os.environ.get("FLASK_ENV", "development")).lower()
+    secret_key = os.environ.get("SECRET_KEY")
+    if environment == "production" and not secret_key:
+        raise RuntimeError("SECRET_KEY must be set when CYBERREADY_ENV=production.")
+    app.config.update(
+        SECRET_KEY=secret_key or secrets.token_urlsafe(32),
+        ENVIRONMENT=environment,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE="Lax",
+        SESSION_COOKIE_SECURE=environment == "production",
     )
+    if test_config:
+        app.config.update(test_config)
 
     # Database configuration
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -34,13 +46,13 @@ def create_app():
         "cyberready.db"
     )
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = (
-        "sqlite:///" + database_path
-    )
+    if not app.config.get("SQLALCHEMY_DATABASE_URI"):
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + database_path
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
+    csrf.init_app(app)
 
     from app.routes import main
     app.register_blueprint(main)

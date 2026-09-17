@@ -321,6 +321,13 @@
         margin-bottom: 16px;
       }
 
+      .history-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+      .history-table { width: 100%; min-width: 600px; border-collapse: collapse; }
+      .history-table th, .history-table td { padding: 15px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+      .history-table th { color: var(--muted); font-size: 13px; background: #f8fafc; }
+      .history-table tr:last-child td { border-bottom: 0; }
+      .history-table a { color: var(--green); font-weight: bold; }
+
       footer {
         text-align: center;
         padding: 40px 20px;
@@ -498,6 +505,21 @@
         </div>
       </div>
       {% endif %}
+
+      <div class="category-section">
+        <div class="section-header">
+          <h2>Assessment History</h2>
+          <p>Your 10 most recent completed assessments.</p>
+        </div>
+        {% if assessment_history %}
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead><tr><th>Date</th><th>Score</th><th>Risk level</th><th>Report</th></tr></thead>
+            <tbody>{% for item in assessment_history %}<tr><td>{{ item.completed_at.strftime('%B %d, %Y') if item.completed_at else 'In progress' }}</td><td>{{ item.score|int if item.score is not none else '—' }} / 40</td><td><span class="risk-level {{ item.risk_level|lower|replace(' ', '-') }}">{{ item.risk_level or '—' }}</span></td><td><a href="{{ url_for('main.download_report', assessment_id=item.id) }}">Download</a></td></tr>{% endfor %}</tbody>
+          </table>
+        </div>
+        {% else %}<div class="no-data"><p>Complete an assessment to build your history.</p></div>{% endif %}
+      </div>
     </div>
 
     <!-- Footer -->

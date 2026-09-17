@@ -93,6 +93,9 @@
         background: #f1f5f9;
       }
 
+      .action-list { background: white; padding: 24px; border-radius: 10px; margin: 25px 0; }
+      .action-list li { margin: 12px 0; }
+
       @media (max-width: 520px) {
         body {
           padding: 20px 14px;
@@ -134,7 +137,20 @@
         <a href="{{ url_for('main.assessment') }}" class="secondary-button">
           Retake Assessment
         </a>
+
+        <a href="{{ url_for('main.download_report', assessment_id=assessment.id) }}" class="secondary-button">
+          Download PDF Report
+        </a>
       </div>
+
+      <section class="action-list"><h2>Domain scores</h2><ul>{% for category in category_results %}<li><strong>{{ category.category }}</strong>: {{ category.score }}/{{ category.maximum_score }} — {{ category.risk_level }}</li>{% endfor %}</ul></section>
+
+      <section class="action-list">
+        <h2>Recommended actions</h2>
+        {% if recommendations %}
+        <ol>{% for item in recommendations %}<li><strong>{{ item.title }}</strong> ({{ item.severity }}): {{ item.recommendation }}</li>{% endfor %}</ol>
+        {% else %}<p>Great job! No immediate weaknesses were identified.</p>{% endif %}
+      </section>
 
       <h2>Your Responses</h2>
 
