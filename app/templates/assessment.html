@@ -216,6 +216,29 @@
         text-align: left;
       }
 
+      .category-help {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid var(--green);
+        background: var(--green-soft);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .category-help:hover,
+      .category-help.is-active {
+        background: var(--green);
+        color: white;
+      }
+
       .category-progress {
         background: rgba(102, 125, 152, 0.2);
         padding: 2px 6px;
@@ -224,6 +247,32 @@
         font-weight: normal;
         white-space: nowrap;
         color: var(--muted);
+      }
+
+      .category-help-panel {
+        margin-top: 14px;
+        padding: 14px 16px;
+        border: 1px solid #d9e2ec;
+        border-radius: 8px;
+        background: #f9fbfc;
+      }
+
+      .category-help-panel[hidden] {
+        display: none;
+      }
+
+      .category-help-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--green);
+        margin: 0 0 8px;
+      }
+
+      .category-help-copy {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 13px;
       }
 
       .question-nav button {
@@ -394,6 +443,7 @@
           {% if question.category not in categories %}
           <div class="category-item" data-category="{{ question.category }}">
             <span class="category-name">{{ question.category }}</span>
+            <button type="button" class="category-help" data-category="{{ question.category }}" aria-label="Learn more about {{ question.category }}">?</button>
             <span class="category-progress" data-category="{{ question.category }}">0/4</span>
           </div>
           {% set _ = categories.append(question.category) %}
@@ -401,8 +451,15 @@
           {% endfor %}
         </div>
 
+        <div class="category-help-panel" id="category-help-panel" hidden aria-live="polite">
+          <h3 class="category-help-title" id="category-help-title">Category details</h3>
+          <p class="category-help-copy" id="category-help-copy">
+            Choose a category to learn more about what this section covers.
+          </p>
+        </div>
+
         <div class="panel-note">
-          Choose the answer that best reflects how your organization operates today. You can review any question before submitting.
+          Tip: click the ? on any category to read more about what the category covers.
         </div>
       </aside>
     </div>
@@ -415,7 +472,6 @@
       const progressCount = document.querySelector("#progress-count");
       const progressPercent = document.querySelector("#progress-percent");
       const totalQuestions = questionCards.length;
-      let activeQuestionIndex = 0;
 
       function getCategoryQuestionsMap() {
         const categoryMap = {};
@@ -475,6 +531,31 @@
         card.classList.add("is-active");
         activeQuestionIndex = questionCards.indexOf(card);
       }
+
+      document.querySelectorAll(".category-help").forEach((button) => {
+        button.addEventListener("click", () => {
+          const category = button.dataset.category;
+          const isActive = button.classList.contains("is-active");
+
+          document.querySelectorAll(".category-help").forEach((item) => {
+            item.classList.toggle("is-active", item === button && !isActive);
+          });
+
+          if (!isActive) {
+            helpTitle.textContent = category;
+            helpCopy.textContent = categoryDetails[category] || "This category covers the core security controls and behaviors relevant to your assessment.";
+            helpPanel.hidden = false;
+          } else {
+            helpPanel.hidden = true;
+          }
+        });
+      });
+
+      document.querySelectorAll(".quit-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          window.location.href = button.dataset.dashboardUrl;
+        });
+      });
 
       document.querySelectorAll("input[type=radio]").forEach((input) => {
         input.addEventListener("change", updateProgress);

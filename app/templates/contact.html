@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Support - CyberReady Ghana</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 24px;
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .panel {
+        background: white;
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      }
+
+      .panel h2 {
+        margin-top: 0;
+        margin-bottom: 12px;
+      }
+
+      .support-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+      }
+
+      .support-list li {
+        margin-bottom: 14px;
+      }
+
+      .support-list a {
+        color: #16805b;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .support-list a:hover {
+        text-decoration: underline;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #334155;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .btn {
+        width: auto;
+      }
+
+      @media (max-width: 760px) {
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href="{{ url_for('main.home') }}" class="logo">CyberReady <span>Ghana</span></a>
+
+      <ul class="nav-links">
+        <li><a href="{{ url_for('main.home') }}">Home</a></li>
+        <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+      </ul>
+    </nav>
+
+    <section class="contact-layout">
+      <div class="panel">
+        <h2>Contact Support</h2>
+        <p>Send us a message and our team will get back to you with assistance.</p>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash-message" style="margin-top: 18px;">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" style="margin-top: 20px;">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required />
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="How can we help?" required />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Describe your issue or support request" required></textarea>
+          </div>
+
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>Support Contacts</h2>
+        <p>
+          For general cybersecurity guidance, technical support, and organizational
+          security assistance, contact <strong>Amalitech</strong>.
+        </p>
+        <p style="margin-top: 12px;">
+          To report suspicious cyber activity, fraud, or cybercrime incidents,
+          contact <strong>CSA</strong>.
+        </p>
+
+        <ul class="support-list">
+          <li>
+            <a href="https://www.amalitech.com/contact-us/" target="_blank" rel="noopener noreferrer">
+              Contact Amalitech for cybersecurity assistance
+            </a>
+          </li>
+          <li>
+            <a href="https://www.csa.gov.gh/report" target="_blank" rel="noopener noreferrer">
+              Contact CSA to report suspicious cyber crime
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
+    </footer>
+  </body>
+</html>

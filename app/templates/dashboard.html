@@ -359,12 +359,11 @@
       <a href="{{ url_for('main.home') }}" class="logo">CyberReady <span>Ghana</span></a>
 
       <ul class="nav-links">
-        <li><a href="{{ url_for('main.dashboard') }}" style="font-weight: bold; color: #22c55e;">Dashboard</a></li>
+        <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
         <li><a href="{{ url_for('main.assessment') }}">Take Assessment</a></li>
         <li class="profile-dropdown">
           <button class="profile-button">👤 {{ organization.organization_name }}</button>
           <div class="dropdown-menu">
-            <a href="{{ url_for('main.dashboard') }}" class="dropdown-item">Dashboard</a>
             <a href="{{ url_for('main.logout') }}" class="dropdown-item logout-item">Logout</a>
           </div>
         </li>

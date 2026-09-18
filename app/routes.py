@@ -91,6 +91,24 @@ def home():
     return render_template("index.html", organization=organization)
 
 
+@main.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip()
+        subject = request.form.get("subject", "").strip()
+        message = request.form.get("message", "").strip()
+
+        if not all([name, email, subject, message]):
+            flash("Please complete all contact form fields.")
+            return redirect(url_for("main.contact"))
+
+        flash("Your support message has been sent successfully.")
+        return redirect(url_for("main.contact"))
+
+    return render_template("contact.html")
+
+
 @main.route("/register", methods=["GET", "POST"])
 def register():
 

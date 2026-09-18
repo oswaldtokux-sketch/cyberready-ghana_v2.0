@@ -20,206 +20,206 @@ QUESTIONS = [
         "question": "Is there a process for immediately disabling accounts when an employee leaves?"
     },
     {
-        "id": 21,
+        "id": 5,
         "category": "Passwords & Account Security",
         "question": "Are password reset procedures documented and verified by management?"
     },
     {
-        "id": 22,
+        "id": 6,
         "category": "Passwords & Account Security",
         "question": "Does your organization use a password manager to securely store credentials?"
     },
     {
-        "id": 23,
+        "id": 7,
         "category": "Passwords & Account Security",
         "question": "Are privileges and access rights reviewed regularly to ensure staff only have necessary permissions?"
     },
     {
-        "id": 24,
+        "id": 8,
         "category": "Passwords & Account Security",
         "question": "Do staff have to change passwords regularly or after suspected compromise?"
     },
     {
-        "id": 25,
+        "id": 9,
         "category": "Passwords & Account Security",
         "question": "Is single sign-on (SSO) implemented for centralized account management?"
     },
     {
-        "id": 26,
+        "id": 10,
         "category": "Passwords & Account Security",
         "question": "Are admin accounts kept separate from regular user accounts?"
     },
 
     {
-        "id": 5,
+        "id": 11,
         "category": "Data Protection",
         "question": "Does your organization regularly back up important business data?"
     },
     {
-        "id": 6,
+        "id": 12,
         "category": "Data Protection",
         "question": "Are customer documents and personal information stored securely?"
     },
     {
-        "id": 7,
+        "id": 13,
         "category": "Data Protection",
         "question": "Is access to sensitive customer information limited to staff who need it?"
     },
     {
-        "id": 8,
+        "id": 14,
         "category": "Data Protection",
         "question": "Does your organization have a procedure for securely deleting old customer information?"
     },
     {
-        "id": 27,
+        "id": 15,
         "category": "Data Protection",
         "question": "Are data backups tested regularly to ensure they can be restored successfully?"
     },
     {
-        "id": 28,
+        "id": 16,
         "category": "Data Protection",
         "question": "Is sensitive data encrypted both at rest and in transit?"
     },
     {
-        "id": 29,
+        "id": 17,
         "category": "Data Protection",
         "question": "Does your organization have a data retention policy specifying how long customer information is kept?"
     },
     {
-        "id": 30,
+        "id": 18,
         "category": "Data Protection",
         "question": "Are USB drives, external hard drives, and portable storage devices restricted or monitored?"
     },
     {
-        "id": 31,
+        "id": 19,
         "category": "Data Protection",
         "question": "Is a data loss prevention (DLP) solution in place to prevent unauthorized data transfer?"
     },
     {
-        "id": 32,
+        "id": 20,
         "category": "Data Protection",
         "question": "Are cloud storage services monitored to ensure sensitive data is not accidentally exposed?"
     },
 
     {
-        "id": 9,
+        "id": 21,
         "category": "Devices & Software",
         "question": "Are company computers protected with antivirus or endpoint security software?"
     },
     {
-        "id": 10,
+        "id": 22,
         "category": "Devices & Software",
         "question": "Are operating systems and applications regularly updated?"
     },
     {
-        "id": 11,
+        "id": 23,
         "category": "Devices & Software",
         "question": "Are company laptops and computers protected with passwords or screen locks?"
     },
     {
-        "id": 12,
+        "id": 24,
         "category": "Devices & Software",
         "question": "Does your organization have a process for reporting lost or stolen devices?"
     },
     {
-        "id": 33,
+        "id": 25,
         "category": "Devices & Software",
         "question": "Are unnecessary programs and services disabled on company computers?"
     },
     {
-        "id": 34,
+        "id": 26,
         "category": "Devices & Software",
         "question": "Is full-disk encryption enabled on all company laptops?"
     },
     {
-        "id": 35,
+        "id": 27,
         "category": "Devices & Software",
         "question": "Are mobile devices (phones, tablets) secured with encryption and screen locks?"
     },
     {
-        "id": 36,
+        "id": 28,
         "category": "Devices & Software",
         "question": "Is remote access to company systems protected with VPN or similar security?"
     },
     {
-        "id": 37,
+        "id": 29,
         "category": "Devices & Software",
         "question": "Are security patches applied promptly when they become available?"
     },
     {
-        "id": 38,
+        "id": 30,
         "category": "Devices & Software",
         "question": "Is software only installed from official or authorized sources?"
     },
 
     {
-        "id": 13,
+        "id": 31,
         "category": "Phishing & Staff Awareness",
         "question": "Do staff receive training on identifying phishing emails and suspicious messages?"
     },
     {
-        "id": 14,
+        "id": 32,
         "category": "Phishing & Staff Awareness",
         "question": "Do staff know not to open suspicious links or attachments?"
     },
     {
-        "id": 15,
+        "id": 33,
         "category": "Phishing & Staff Awareness",
         "question": "Is there a process for reporting suspected scams or security incidents?"
     },
     {
-        "id": 16,
+        "id": 34,
         "category": "Phishing & Staff Awareness",
         "question": "Do staff know how to verify unusual payment or transfer requests?"
     },
     {
-        "id": 39,
+        "id": 35,
         "category": "Phishing & Staff Awareness",
         "question": "Is anti-phishing training provided at least annually?"
     },
     {
-        "id": 40,
+        "id": 36,
         "category": "Phishing & Staff Awareness",
         "question": "Does your organization conduct simulated phishing tests to measure staff awareness?"
     },
     {
-        "id": 41,
+        "id": 37,
         "category": "Phishing & Staff Awareness",
         "question": "Are staff aware of social engineering tactics and how to respond?"
     },
     {
-        "id": 42,
+        "id": 38,
         "category": "Phishing & Staff Awareness",
         "question": "Is there a clear policy against sharing passwords verbally or via email?"
     },
     {
-        "id": 43,
+        "id": 39,
         "category": "Phishing & Staff Awareness",
         "question": "Do staff verify sender email addresses before clicking links or downloading attachments?"
     },
     {
-        "id": 44,
+        "id": 40,
         "category": "Phishing & Staff Awareness",
         "question": "Are staff aware of the risks of public Wi-Fi and how to use it safely?"
     },
 
     {
-        "id": 17,
+        "id": 41,
         "category": "Incident Response & Business Continuity",
         "question": "Does your organization have a written cybersecurity incident response procedure?"
     },
     {
-        "id": 18,
+        "id": 42,
         "category": "Incident Response & Business Continuity",
         "question": "Do staff know who to contact when a cybersecurity incident occurs?"
     },
     {
-        "id": 19,
+        "id": 43,
         "category": "Incident Response & Business Continuity",
         "question": "Has your organization tested whether backups can actually be restored?"
     },
     {
-        "id": 20,
+        "id": 44,
         "category": "Incident Response & Business Continuity",
         "question": "Does your organization have a plan for continuing operations after a major cyber incident?"
     },
