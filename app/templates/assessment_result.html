@@ -15,60 +15,79 @@
       }
 
       .container {
-        max-width: 700px;
-        margin: 60px auto;
+        max-width: 900px;
+        margin: auto;
       }
 
       .summary {
         background: white;
-        padding: 30px 24px;
+        padding: 30px;
         border-radius: 10px;
+        margin-bottom: 25px;
         text-align: center;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
       }
 
-      h1 {
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #0f172a;
+      .score {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 15px 0;
       }
 
-      p {
-        color: #475569;
-        margin: 0;
+      .risk {
+        font-size: 24px;
+        font-weight: bold;
       }
 
-      .result-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-        margin-top: 24px;
+      .answer {
+        background: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
       }
 
-      .back-button,
-      .secondary-button {
-        display: inline-block;
-        padding: 12px 20px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: 0.2s ease;
+      .category {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 8px;
+      }
+
+      .selected {
+        font-weight: bold;
       }
 
       .back-button {
+        display: inline-block;
+        padding: 12px 20px;
         background: #16805b;
         color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        margin-bottom: 20px;
       }
 
       .back-button:hover {
         background: #0f6849;
       }
 
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .result-actions .back-button {
+        margin-bottom: 0;
+      }
+
       .secondary-button {
+        display: inline-block;
+        padding: 12px 20px;
         border: 1px solid #cbd5e1;
+        border-radius: 6px;
         color: #334e68;
-        background: white;
+        text-decoration: none;
       }
 
       .secondary-button:hover {
@@ -83,6 +102,14 @@
           padding: 20px 14px;
         }
 
+        .summary {
+          padding: 24px 18px;
+        }
+
+        .score {
+          font-size: 40px;
+        }
+
         .result-actions a {
           width: 100%;
           text-align: center;
@@ -94,7 +121,12 @@
   <body>
     <div class="container">
       <div class="summary">
-        <h1>Assessment Complete</h1>
+        <h1>Cybersecurity Assessment Results</h1>
+
+        <div class="score">{{ score }} / 40</div>
+
+        <div class="risk">{{ risk_level }}</div>
+
         <p>Your cybersecurity assessment has been completed.</p>
       </div>
 
@@ -112,24 +144,14 @@
         </a>
       </div>
 
-      <h2>Your Responses</h2>
+      <section class="action-list"><h2>Domain scores</h2><ul>{% for category in category_results %}<li><strong>{{ category.category }}</strong>: {{ category.score }}/{{ category.maximum_score }} — {{ category.risk_level }}</li>{% endfor %}</ul></section>
 
-      {% for question in questions %}
-
-      <div class="answer">
-        <div class="category">{{ question.category }}</div>
-
-        <p>
-          <strong>{{ question.id }}.</strong>
-          {{ question.question }}
-        </p>
-
-        <p class="selected">
-          Your answer: {{ answers[question.id|string]|capitalize }}
-        </p>
-      </div>
-
-      {% endfor %}
+      <section class="action-list">
+        <h2>Recommended actions</h2>
+        {% if recommendations %}
+        <ol>{% for item in recommendations %}<li><strong>{{ item.title }}</strong> ({{ item.severity }}): {{ item.recommendation }}</li>{% endfor %}</ol>
+        {% else %}<p>Great job! No immediate weaknesses were identified.</p>{% endif %}
+      </section>
     </div>
   </body>
 </html>
