@@ -1,162 +1,193 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Register - CyberReady Ghana</title>
 
-    <title>Register - CyberReady Ghana</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
+<style>
+  .account-prompt {
+    margin-top: 18px;
+    text-align: center;
+    color: #64748b;
+  }
 
-    <style>
-      .account-prompt {
-        margin-top: 18px;
-        text-align: center;
-        color: #64748b;
-      }
+  .account-prompt a {
+    color: #16805b;
+    font-weight: bold;
+    text-decoration: none;
+  }
 
-      .account-prompt a {
-        color: #16805b;
-        font-weight: bold;
-        text-decoration: none;
-      }
+  .account-prompt a:hover {
+    text-decoration: underline;
+  }
 
-      .account-prompt a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
+  /* Ghana phone number field */
+  .ghana-phone-wrapper {
+    display: flex;
+    width: 100%;
+  }
 
-  <body>
-    <!-- Navigation -->
-    <nav>
-      <a href="{{ url_for('main.home') }}" class="logo">CyberReady <span>Ghana</span></a>
+  .ghana-phone-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 14px;
+    border: 1px solid #cbd5e1;
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    background-color: #f8fafc;
+    white-space: nowrap;
+    font-size: 16px;
+  }
 
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
-      </ul>
-    </nav>
+  .ghana-flag {
+    width: 24px;
+    height: auto;
+    display: block;
+  }
 
-    <!-- Registration Section -->
-    <section>
-      <div class="section-title">
-        <h2>Create Your Organization Account</h2>
+  .ghana-phone-wrapper input {
+    flex: 1;
+    width: 100%;
+    border-radius: 0 6px 6px 0;
+  }
+</style>
 
-        <p>
-          Register your travel agency to begin your cybersecurity
-          self-assessment.
-        </p>
+<ul class="nav-links">
+  <li><a href="/">Home</a></li>
+  <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+</ul>
+</nav>
+
+<!-- Registration Section -->
+<section>
+  <div class="section-title">
+    <h2>Create Your Organization Account</h2>
+
+    <p>
+      Register your travel agency to begin your cybersecurity
+      self-assessment.
+    </p>
+  </div>
+
+  <div class="form-container">
+    <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+      <!-- Organization Name -->
+      <div class="form-group">
+        <label for="organization_name"> Organization Name </label>
+
+        <input
+          type="text"
+          id="organization_name"
+          name="organization_name"
+          placeholder="Enter organization name"
+          required
+        />
       </div>
 
-      <div class="form-container">
-        <form method="POST">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <!-- Organization Name -->
-          <div class="form-group">
-            <label for="organization_name"> Organization Name </label>
+      <!-- Contact Person -->
+      <div class="form-group">
+        <label for="contact_person"> Contact Person </label>
 
-            <input
-              type="text"
-              id="organization_name"
-              name="organization_name"
-              placeholder="Enter organization name"
-              required
-            />
-          </div>
-
-          <!-- Contact Person -->
-          <div class="form-group">
-            <label for="contact_person"> Contact Person </label>
-
-            <input
-              type="text"
-              id="contact_person"
-              name="contact_person"
-              placeholder="Enter contact person's name"
-              required
-              pattern="[A-Za-z][A-Za-z .'-]{1,148}"
-            />
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label for="email"> Email Address </label>
-
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter email address"
-              required
-            />
-          </div>
-
-          <!-- Phone -->
-          <div class="form-group">
-            <label for="phone"> Phone Number </label>
-
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Enter phone number"
-              required
-              pattern="[0-9+()\-\s]{7,30}"
-            />
-          </div>
-
-          <!-- Password -->
-          <div class="form-group">
-            <label for="password"> Password </label>
-
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Create a password"
-              required
-              minlength="12"
-              pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}"
-              title="Use 12+ characters with uppercase, lowercase, a number, and a symbol."
-            />
-          </div>
-
-          <!-- Confirm Password -->
-          <div class="form-group">
-            <label for="confirm_password"> Confirm Password </label>
-
-            <input
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              placeholder="Confirm your password"
-              required
-              minlength="12"
-            />
-          </div>
-
-          <button type="submit" class="btn">Create Account</button>
-        </form>
-
-        <p class="account-prompt">
-          Already have an account?
-          <a href="{{ url_for('main.login') }}">Log in</a>
-        </p>
+        <input
+          type="text"
+          id="contact_person"
+          name="contact_person"
+          placeholder="Enter contact person's name"
+          required
+          pattern="[A-Za-z][A-Za-z .'-]{1,148}"
+        />
       </div>
-    </section>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %}
 
-    <div class="flash-message">{{ message }}</div>
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email"> Email Address </label>
 
-    {% endfor %} {% endif %} {% endwith %}
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter email address"
+          required
+        />
+      </div>
 
-    <footer>
-      <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
-    </footer>
-  </body>
-</html>
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone"> Phone Number </label>
+
+        <div class="ghana-phone-wrapper">
+          <div class="ghana-phone-code">
+            <img
+              src="https://flagcdn.com/w40/gh.png"
+              alt="Ghana flag"
+              class="ghana-flag"
+            />
+            <span>+233</span>
+          </div>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="24 123 4567"
+            required
+            pattern="[0-9\s]{9,12}"
+          />
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password"> Password </label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Create a password"
+          required
+          minlength="12"
+          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}"
+          title="Use 12+ characters with uppercase, lowercase, a number, and a symbol."
+        />
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirm_password"> Confirm Password </label>
+
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          placeholder="Confirm your password"
+          required
+          minlength="12"
+        />
+      </div>
+
+      <button type="submit" class="btn">Create Account</button>
+    </form>
+
+    <p class="account-prompt">
+      Already have an account?
+      <a href="{{ url_for('main.login') }}">Log in</a>
+    </p>
+  </div>
+</section>
+
+{% with messages = get_flashed_messages() %} {% if messages %} {% for
+message in messages %}
+
+<div class="flash-message">{{ message }}</div>
+
+{% endfor %} {% endif %} {% endwith %}
+
+<footer>
+  <p>© 2026 CyberReady Ghana. Cybersecurity made practical.</p>
+</footer>
